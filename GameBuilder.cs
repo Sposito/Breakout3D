@@ -7,13 +7,7 @@ public  class GameBuilder : MonoBehaviour {
 	public static float horizontalBounderies = 5.45f;
 	public static float handleSpeed = 5f;
 	public static float bricksAnimSpeed = 8f;
-
 	public static int destroyedBricks = 0;
-//	bool isCompleteted = true;
-	private void LevelComplete(){
-		Destroy (gameGO);
-		Build ();
-	}
 	public static float speed = 2f;
 
 	public static readonly Color baseColor = Color.green;
@@ -34,18 +28,21 @@ public  class GameBuilder : MonoBehaviour {
 	void Update () {
 		if (ball.transform.position.y < -1f || destroyedBricks >= 21 ) 
 			Restart ();
-
-
 	}
 	void Restart(){
 		destroyedBricks = 0;
 		Destroy (gameGO);
 		Build ();
-
+	}
+	
+	private void LevelComplete(){
+		Destroy (gameGO);
+		Build ();
 	}
 
 	void Build(){
 		gameGO = new GameObject();
+		
 		//Player Assembly
 		GameObject player = GameObject.CreatePrimitive (PrimitiveType.Cube);
 		player.transform.position = Vector3.zero;
@@ -56,14 +53,11 @@ public  class GameBuilder : MonoBehaviour {
 		player.name = "Player";
 		player.GetComponent<BoxCollider> ().center = new Vector3 (0f, 0.45f);
 		player.GetComponent<BoxCollider> ().size = new Vector3 (1f, .1f, 1f);
-
 		//Camera Config
 		Camera.main.transform.position = new Vector3(0f, 5f,-10f);
 		Camera cam = Camera.main;
 		cam.clearFlags = CameraClearFlags.SolidColor;
 		cam.backgroundColor = new Color(.2f,.25f,.25f);
-		//cam.transform.SetParent (gameGO.transform);
-
 		//Light Creation
 		GameObject light = new GameObject ();
 		light.name = "light";
@@ -73,8 +67,6 @@ public  class GameBuilder : MonoBehaviour {
 		lightComponent.color = new Color (.9f, .9f, .8f);
 		light.transform.Rotate (45f, 0f, 0f);
 		light.transform.SetParent (gameGO.transform);
-
-
 		//Ball Config
 		ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		ball.transform.position = new Vector3 (0f, 1.1f);
@@ -82,11 +74,8 @@ public  class GameBuilder : MonoBehaviour {
 		ball.AddComponent<BallBehaviour> ();
 		ball.transform.SetParent (player.transform);
 		ball.AddComponent<Rigidbody> ().isKinematic = true;
-
-		player.transform.SetParent (gameGO.transform); // player is outplaced here to keep the ball as its parent
-
-
-
+			// player is outplaced here to keep the ball as its parent
+		player.transform.SetParent (gameGO.transform);
 		//Brick Builder
 		GameObject brick = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		brick.transform.localScale = new Vector3 (2f, 1f, 1f);
@@ -94,9 +83,7 @@ public  class GameBuilder : MonoBehaviour {
 		brick.AddComponent<BrickBehaviour> ();
 		GameObject bricksParent = new GameObject ();
 		bricksParent.name = "Bricks";
-
 		GameObject[] bricks = new GameObject[21];
-
 		int xPos = -4;
 		int yPos = 9;
 		for (int i = 0; i < bricks.Length; i++) {
@@ -113,7 +100,6 @@ public  class GameBuilder : MonoBehaviour {
 		}
 		bricksParent.transform.SetParent (gameGO.transform);
 		Destroy (brick);
-
 		lastBallPos = ball.transform.position;
 	}
 	
@@ -132,9 +118,7 @@ public  class GameBuilder : MonoBehaviour {
 					ball.transform.position = new Vector3 (0, 2f, 0f);
 					ball.GetComponent<BallBehaviour> ().SetBallSpeedDirection (Vector2.up);
 				}
-
 				lastBallPos = ball.transform.position;
-
 			}
 			 yield return new WaitForSeconds(5f);
 		}
