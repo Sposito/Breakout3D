@@ -1,7 +1,7 @@
 # Breakout3D
 First deliverable from Game Engines II module(Engines I revision).
 
-Play the game att http://sposito.github.io/Breakout/
+Play the game at http://sposito.github.io/Breakout/
 
 To implement this on you Unity Project:
 
