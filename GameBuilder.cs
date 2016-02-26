@@ -25,13 +25,12 @@ public  class GameBuilder : MonoBehaviour {
 	GameObject ball;
 
 	void Start () {
-		//Material material = new Material (new Shader ());
 		Build();
 		StartCoroutine("UnStuck");
 
 	}
 	
-	// Update is called once per frame
+	
 	void Update () {
 		if (ball.transform.position.y < -1f || destroyedBricks >= 21 ) 
 			Restart ();
@@ -117,8 +116,11 @@ public  class GameBuilder : MonoBehaviour {
 
 		lastBallPos = ball.transform.position;
 	}
+	
+	///<summary>For misterious floathing point mathematical reasons, sometimes the ball gets stucked on the screen 
+	///edges,. This coroutine handles it</summary>
 	IEnumerator UnStuck(){
-
+		//TODO: use dinamic values for the limits
 		while (true) {
 			if (BallBehaviour.isMoving) {
 				bool isYStuck = (Mathf.Abs (lastBallPos.y - ball.transform.position.y) < 0.1) && 
