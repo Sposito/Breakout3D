@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public class BrickBehaviour : MonoBehaviour {
-	int mod;
-	float speed = GameBuilder.bricksAnimSpeed / 1000;
+	int mod; // determine in which direction brick starts moving
+	float speed = GameBuilder.bricksAnimSpeed / 1000; // animation speed
 
 	void Start () {
 		mod = (Random.value > .5) ? 1 : -1;
@@ -12,14 +12,13 @@ public class BrickBehaviour : MonoBehaviour {
 	void Update () {
 		Ocilate ();
 	}
-
-	void OnTriggerEnter(Collider col){
-	
+	// Destroys brick when ball trigger it
+	void OnTriggerEnter(Collider col){ 
 		Destroy (gameObject);
 		GameBuilder.destroyedBricks++;
 	}
 
-	void Ocilate(){
+	void Ocilate(){ // move the brick back and forward
 		if (mod > 0 && transform.position.z < .1f)
 			transform.Translate (0f, 0f, speed * mod);
 		else if(mod > 0){
