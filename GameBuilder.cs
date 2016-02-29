@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+#if UNITY_5_3
 using UnityEngine.SceneManagement;
+#endif
 
 public  class GameBuilder : MonoBehaviour {
 	public static float horizontalBounderies = 5.45f;
